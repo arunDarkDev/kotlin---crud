@@ -7,7 +7,6 @@ import javax.persistence.*
 @Table(name = "employee")
 data class EmployeeEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     var Id:Int? = null,
     var name:String
 )
