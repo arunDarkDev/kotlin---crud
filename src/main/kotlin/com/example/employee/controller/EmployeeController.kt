@@ -14,7 +14,7 @@ class EmployeeController(val employeeService: EmployeeService) {
 
     @GetMapping()
     fun getGreet() : String{
-        return "Vanakam da mpla"
+        return "Vanakam da mpla Controller lendhu.."
     }
 
     @GetMapping("getAll")
@@ -33,7 +33,7 @@ class EmployeeController(val employeeService: EmployeeService) {
 
     @PostMapping("post")
     fun addEmployee(@RequestBody employeeDto: EmployeeDto) :ResponseEntity<Any>{
-        if(employeeDto.Id is Int) {
+        if(employeeDto.Id is Int || employeeDto.Id == null) {
             return ResponseEntity(this.employeeService.addEmployee(employeeDto), HttpStatus.OK)
         }
         return ResponseEntity("Given data is invalid",HttpStatus.BAD_REQUEST)
@@ -66,5 +66,10 @@ class EmployeeController(val employeeService: EmployeeService) {
             return ResponseEntity(opt.get(),HttpStatus.OK);
         }
         return ResponseEntity("Specified id is not present in the database, Not able to update",HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("postWithDeptId")
+    fun addEmployeeWithDeptid(@RequestBody employeeDto: EmployeeDto,@RequestParam(required = false) deptId : Int = 0): EmployeeEntity {
+       return this.employeeService.addEmployeeWithDeptId(employeeDto,deptId);
     }
 }
